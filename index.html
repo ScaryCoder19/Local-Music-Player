@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Late Shift — Turntable Player</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="stage">
+  <div class="gatefold">
+
+    <!-- LEFT: turntable -->
+    <section class="turntable-panel">
+      <p class="eyebrow">
+        Now spinning
+        <span class="eq" id="eq"><span></span><span></span><span></span></span>
+      </p>
+
+      <div class="deck">
+        <div class="platter">
+          <div class="disc" id="disc">
+            <div class="disc-label"><span id="labelInitials">—</span></div>
+          </div>
+        </div>
+        <div class="tonearm-wrap" id="tonearmWrap">
+          <div class="tonearm-arm"></div>
+          <div class="tonearm-pivot"></div>
+        </div>
+      </div>
+
+      <div class="track-info">
+        <h1 id="trackTitle">—</h1>
+        <p id="trackArtist">—</p>
+      </div>
+
+      <div class="progress-row">
+        <span class="time" id="currentTime">00:00</span>
+        <input type="range" id="progress" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+        <span class="time right" id="totalTime">00:00</span>
+      </div>
+
+      <div class="controls-row">
+        <button class="icon-btn" id="loadBtn" aria-label="Add music" title="Add music">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
+            <path d="M12 11v6"></path>
+            <path d="M9 14l3 3 3-3"></path>
+          </svg>
+        </button>
+
+        <button class="icon-btn" id="shuffleBtn" aria-label="Toggle shuffle" title="Shuffle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 3 21 3 21 8"></polyline>
+            <line x1="4" y1="20" x2="21" y2="3"></line>
+            <polyline points="21 16 21 21 16 21"></polyline>
+            <line x1="15" y1="15" x2="21" y2="21"></line>
+            <line x1="4" y1="4" x2="9" y2="9"></line>
+          </svg>
+        </button>
+
+        <button class="icon-btn" id="prevBtn" aria-label="Previous track" title="Previous">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h2v16H6zM19 4v16l-10-8z"></path></svg>
+        </button>
+
+        <button class="play-btn" id="playBtn" aria-label="Play">
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l14 8-14 8z"></path></svg>
+          <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"></path></svg>
+        </button>
+
+        <button class="icon-btn" id="nextBtn" aria-label="Next track" title="Next">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 4h2v16h-2zM5 4v16l10-8z"></path></svg>
+        </button>
+
+        <button class="icon-btn" id="repeatBtn" aria-label="Toggle repeat" title="Repeat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="17 1 21 5 17 9"></polyline>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+            <polyline points="7 23 3 19 7 15"></polyline>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+          </svg>
+          <span class="badge" id="repeatBadge" style="display:none">1</span>
+        </button>
+      </div>
+
+      <div class="volume-row">
+        <button class="icon-btn" id="volBtn" aria-label="Mute">
+          <svg id="volIconOn" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 5V4L8 9H4z"></path><path d="M16.5 8.5a4.5 4.5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          <svg id="volIconOff" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M4 9v6h4l5 5V4L8 9H4z"></path><line x1="16" y1="9" x2="22" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line><line x1="22" y1="9" x2="16" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></line></svg>
+        </button>
+        <input type="range" id="volume" min="0" max="100" value="70" aria-label="Volume">
+      </div>
+    </section>
+
+    <div class="spine" aria-hidden="true"></div>
+
+    <!-- RIGHT: playlist -->
+    <section class="playlist-panel">
+      <p class="eyebrow">Tracklist <span class="count" id="trackCount"></span></p>
+      <ul class="tracklist" id="tracklist"></ul>
+      <p class="sleeve-note">Click the folder to add music or drop files onto the playlist. Playback moves to the next song automatically.</p>
+    </section>
+
+  </div>
+</div>
+
+<audio id="audio" preload="metadata"></audio>
+<input id="fileInput" type="file" accept="audio/*" multiple webkitdirectory hidden>
+
+<script src="script.js"></script>
+
+</body>
+</html>
